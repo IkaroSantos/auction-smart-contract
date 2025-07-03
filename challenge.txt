@@ -1,0 +1,51 @@
+Desafio: Implementar um sistema de leilão descentralizado com NFTs
+📄 Descrição
+Construa um contrato inteligente em Solidity que gerencie leilões de NFTs (ERC721), permitindo:
+
+✅ O proprietário do NFT iniciar um leilão, definindo preço mínimo e tempo de duração
+✅ Usuários darem lances (bids) em ETH
+✅ O maior lance ao final do tempo definido leva o NFT
+✅ Caso ninguém dê lance, o NFT volta para o dono original
+✅ O ETH dos lances perdedores deve poder ser retirado pelos respectivos usuários (pull payment pattern)
+✅ O leilão deve emitir eventos para:
+
+criação do leilão
+
+novos lances
+
+término do leilão (vendido ou não vendido)
+
+📌 Requisitos técnicos
+✅ Utilizar Solidity 0.8.x
+✅ Seguir boas práticas de segurança (checks-effects-interactions, reentrancy protection)
+✅ Implementar testes em JavaScript/TypeScript com Hardhat ou Foundry
+✅ Escrever documentação mínima (README) explicando como implantar e testar
+✅ Opcional (se quiser impressionar ainda mais): front-end simples (por exemplo, usando React + ethers.js) mostrando a lista de leilões e permitindo dar lances
+
+⚙️ Funcionalidades esperadas
+startAuction(tokenId, minPrice, duration) — inicia leilão do NFT
+
+bid(auctionId) — faz uma oferta
+
+endAuction(auctionId) — finaliza o leilão
+
+withdraw() — retira saldo de lances perdidos
+
+🎯 O que o recrutador vai ver com isso?
+✅ Domínio do padrão ERC721 (NFTs)
+✅ Uso de eventos, structs, mappings, enums
+✅ Manuseio de ETH dentro do contrato
+✅ Gestão de tempo de leilão (block.timestamp)
+✅ Boas práticas de segurança (evitar reentrancy)
+✅ Testes automatizados
+✅ Organização de código e capacidade de escrever um smart contract completo
+
+👉 Se quiser, posso te ajudar a:
+
+detalhar ainda mais o escopo
+
+sugerir um README modelo
+
+ou até montar um checklist de requisitos para avaliação
+
+Me fala se quer que eu aprofunde algum ponto!

@@ -1,0 +1,68 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Auction is ERC721URIStorage, Ownable {
+
+    struct AuctionItem {
+        uint256 tokenId;
+        uint256 minPrice;
+        uint256 highestBid;
+        address highestBidder;
+        uint256 endTime;
+        bool ended;
+    }
+
+    mapping(uint256 => AuctionItem) public auctions;
+
+    constructor() ERC721("Auction", "ANFT") {}
+
+    function startAuction(
+        uint256 tokenId,
+        uint256 minPrice,
+        uint256 duration,
+        string memory tokenURI
+    ) public onlyOwner {
+        require(auctions[tokenId].endTime == 0, "Auction already exists");
+
+        auctions[tokenId] = AuctionItem({
+            tokenId: tokenId,
+            minPrice: minPrice,
+            highestBid: 0,
+            highestBidder: address(0),
+            endTime: block.timestamp + duration,
+            ended: false
+        });
+
+        // store metadata in advance
+        _setTokenURI(tokenId, tokenURI);
+    }
+
+    function bid(uint256 tokenId) external payable {
+        AuctionItem storage auction = auctions[tokenId];
+        require(block.timestamp < auction.endTime, "Auction has ended");
+        require(msg.value > auction.highestBid && msg.value >= auction.minPrice, "Bit too low");
+
+        if (auction.highestBidder != address(0)) {
+            payable (auction.highestBidder).transfer(auction.highestBid);
+        }
+
+        auction.highestBid = msg.value;
+        auction.highestBidder = msg.sender;
+    }
+
+    function finalizeAuction(uint256 tokenId) external {
+        AuctionItem storage auction = auctions[tokenId];
+        require(block.timestamp >= auction.endTime, "Auction not yet ended");
+        require(!auction.ended, "Auction already finished");
+
+        auction.ended = true;
+
+        if (auction.highestBidder != address(0)) {
+            _safeMint(auction.highestBidder, tokenId);
+            payable (owner()).transfer(auction.highestBid);
+        }
+    }
+}
