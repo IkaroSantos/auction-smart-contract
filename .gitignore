@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Dependency lock files (optional, depending on your workflow)
+# package-lock.json
+# yarn.lock
+
+# Hardhat artifacts
+artifacts/
+cache/
+typechain/
+coverage/
+
+# Truffle artifacts
+build/
+*.db
+
+# dotenv environment files
+.env
+.env.*
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+
+# Log files
+*.log
+
+# Coverage reports
+coverage/
+
+# Compiled Solidity binaries
+*.abi
+*.bin
+
+# Local network state
+.chainId

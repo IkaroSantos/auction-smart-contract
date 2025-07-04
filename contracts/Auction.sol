@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import { Context } from "@openzeppelin/contracts/utils/Context.sol";
 
 contract Auction is ERC721URIStorage, Ownable {
 
@@ -17,7 +18,7 @@ contract Auction is ERC721URIStorage, Ownable {
 
     mapping(uint256 => AuctionItem) public auctions;
 
-    constructor() ERC721("Auction", "ANFT") {}
+    constructor() ERC721("Auction", "ANFT") Ownable(msg.sender) {}
 
     function startAuction(
         uint256 tokenId,
